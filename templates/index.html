@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Mô hình phân loại văn bản</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Mô hình phân loại văn bản</h1>
+        <p>Độ chính xác của mô hình SVM: {{ accuracy_svm }}</p>
+        <p>Độ chính xác của mô hình Logistic Regression: {{ accuracy_logistic }}</p>
+        <p>Độ chính xác của mô hình Gaussian Naive Bayes: {{ accuracy_nb }}</p>
+        <form method="post">
+            <textarea name="input_text" rows="10" cols="50" placeholder="Nhập văn bản để phân loại..."></textarea><br>
+            <label for="model">Chọn mô hình:</label>
+            <select name="model" id="model">
+                <option value="svm" {% if selected_model == 'svm' %}selected{% endif %}>SVM</option>
+                <option value="logistic" {% if selected_model == 'logistic' %}selected{% endif %}>Logistic Regression</option>
+                <option value="naive_bayes" {% if selected_model == 'naive_bayes' %}selected{% endif %}>Naive Bayes</option>
+            </select><br><br>
+            <button type="submit">Phân loại</button>
+        </form>
+
+        {% if result %}
+            <h2>Kết quả phân loại: {{ result }}</h2>
+        {% elif not input_text %}
+            <h3 style="color: red;">Vui lòng nhập văn bản để phân loại.</h3>
+        {% endif %}
+    </div>
+</body>
+</html>
